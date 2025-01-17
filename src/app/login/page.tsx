@@ -71,7 +71,7 @@ const LoginPage: React.FC = () => {
                     </div>
 
                     <div>
-                        <button type="submit" className="flex w-full justify-center rounded-md bg-[#A0153E] px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-[#FF204E] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#FF204E]">Sign in</button>
+                        <button type="submit" className="flex w-full justify-center rounded-md bg-[#A0153E] px-3 py-1.5 text-sm/6 font-semibold text-white shadow-2xs hover:bg-[#FF204E] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#FF204E]">Sign in</button>
                     </div>
                 </form>
 
