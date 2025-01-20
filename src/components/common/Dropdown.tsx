@@ -1,20 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+
 interface DropdownProps {
-
-    options: number[];
-  
+    options: { id: number, name: string }[];
     action: string;
-  
-  }
-const Dropdown: React.FC<any> = ({options, action, onClickOption}) => {
-    const [isOpen, setIsOpen] = useState(false);
+    selected: number;
+    onClickOption: (option: any) => void;
+}
 
-    const toggleDropdown = () => {
+const Dropdown: React.FC<DropdownProps> = ({ options, action, selected, onClickOption }) => {
+    const [isOpen, setIsOpen] = useState(false);
+    const dropdownRef = useRef<HTMLDivElement>(null);
+
+    const toggleDropdown = (event: React.MouseEvent) => {
+        event.stopPropagation();
         setIsOpen(!isOpen);
     };
 
+    const handleClickOutside = (event: MouseEvent) => {
+        if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+            setIsOpen(false);
+        }
+    };
+
+    useEffect(() => {
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+
+    const selectedOption = options.find(option => option.id === selected);
+
     return (
-        <div className="relative inline-block text-left">
+        <div className="relative inline-block text-left" ref={dropdownRef}>
             <div>
                 <button
                     type="button"
@@ -24,8 +42,7 @@ const Dropdown: React.FC<any> = ({options, action, onClickOption}) => {
                     aria-haspopup="true"
                     onClick={toggleDropdown}
                 >
-                    
-                    {action}
+                    {selectedOption ? selectedOption.name : action}
                     <svg
                         className="-mr-1 ml-2 h-5 w-5"
                         xmlns="http://www.w3.org/2000/svg"
@@ -48,6 +65,7 @@ const Dropdown: React.FC<any> = ({options, action, onClickOption}) => {
                     role="menu"
                     aria-orientation="vertical"
                     aria-labelledby="options-menu"
+                    onClick={(e) => e.stopPropagation()}
                 >
                     <div className="py-1" role="none">
                         {options.map((option: any) => (
@@ -59,9 +77,7 @@ const Dropdown: React.FC<any> = ({options, action, onClickOption}) => {
                             >
                                 {option.name}
                             </button>
-                        )
-                        )}
-                        
+                        ))}
                     </div>
                 </div>
             )}
