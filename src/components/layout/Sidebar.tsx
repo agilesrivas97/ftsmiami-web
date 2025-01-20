@@ -2,28 +2,28 @@
 import Link from 'next/link';
 import React from 'react';
 
-
 const Sidebar: React.FC = () => {
     return (
         <div
             className="relative flex h-screen w-full max-w-[15rem] flex-col  bg-white bg-clip-border p-4 text-gray-700 shadow-xl shadow-blue-gray-900/5">
-            <div className="p-4 mb-2">
+
+            <div className="p-4 mb-2"> 
                 <h5 className="block font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
                     Admin Panel
                 </h5>
             </div>
             <nav className="flex min-w-[240px] flex-col gap-1 p-2 font-sans text-base font-normal text-blue-gray-700">
-            <Link href="/dashboard" 
+                <Link href="/dashboard"
                     className="flex items-center w-full p-3 leading-tight transition-all rounded-lg outline-hidden text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
                     <div className="grid mr-4 place-items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
-  <path strokeLinecap="round" strokeLinejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
-</svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                        </svg>
 
                     </div>
                     Home
                 </Link>
-                <Link href="/dashboard/reports" 
+                <Link href="/dashboard/reports"
                     className="flex items-center w-full p-3 leading-tight transition-all rounded-lg outline-hidden text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
                     <div className="grid mr-4 place-items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"
@@ -47,7 +47,7 @@ const Sidebar: React.FC = () => {
                     </div>
                     Users
                 </Link>
-                <Link href="/dashboard/settings" 
+                <Link href="/dashboard/settings"
                     className="flex items-center w-full p-3 leading-tight transition-all rounded-lg outline-hidden text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
                     <div className="grid mr-4 place-items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"
