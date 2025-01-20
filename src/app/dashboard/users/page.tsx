@@ -1,4 +1,5 @@
 "use client"
+import Dropdown from '@/components/common/Dropdown';
 import { useState } from 'react';
 
 interface User {
@@ -32,6 +33,16 @@ const initialUsers: User[] = [{
 }
 ];
 
+const roles: any[] = [{
+  id: 1,
+  name: 'Admin'
+},
+
+{
+    id: 2,
+  name: 'User'
+}
+];
 
 const UsersPage: React.FC = () => {
   const [users, setUsers] = useState<User[]>(initialUsers);
@@ -174,14 +185,8 @@ const UsersPage: React.FC = () => {
                   <input type="number" name="price" id="price" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="$2999" required={true} />
                 </div>
                 <div className="col-span-2 sm:col-span-1">
-                  <label htmlFor="category" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
-                  <select id="category" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                    <option selected={false}>Select category</option>
-                    <option value="TV">TV/Monitors</option>
-                    <option value="PC">PC</option>
-                    <option value="GA">Gaming/Console</option>
-                    <option value="PH">Phones</option>
-                  </select>
+                  <label htmlFor="category" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Roles</label>
+                  <Dropdown options={roles} action={"Selected role"} onClickOption={()=>{}}/>
                 </div>
                 <div className="col-span-2">
                   <label htmlFor="description" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Product Description</label>
