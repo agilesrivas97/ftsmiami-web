@@ -1,5 +1,11 @@
 @import 'tailwindcss';
 
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-primary: var(--primary);
+}
 
 /*
   The default border color has changed to `currentColor` in Tailwind CSS v4,
@@ -19,7 +25,9 @@
   }
 }
 
-
+html {
+  color-scheme: light;
+}
 
 :root {
   --background: #ffff;

@@ -47,7 +47,7 @@ const LoginPage: React.FC = () => {
                             <input type="email" name="email" id="email"
                              onChange={(e) => setEmail(e.target.value)}
                              autoComplete="email" 
-                            required className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
+                            required className="block w-full rounded-sm-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
                         </div>
                     </div>
 
@@ -63,12 +63,12 @@ const LoginPage: React.FC = () => {
                             <input type="password" 
                             name="password" id="password" 
                             onChange={(e) => setPassword(e.target.value)}
-                            autoComplete="current-password" required className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
+                            autoComplete="current-password" required className="block w-full rounded-sm-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
                         </div>
                     </div>
 
                     <div>
-                        <button type="submit" className="flex w-full justify-center rounded-md bg-color-button px-3 py-1.5 text-sm/6 font-semibold text-white shadow-2xs hover:bg-[#0a0a0a] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#FF204E]">Sign in</button>
+                        <button type="submit" className="flex w-full justify-center rounded-sm-md bg-color-button px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm-2xs hover:bg-[#0a0a0a] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#FF204E]">Sign in</button>
                     </div>
                 </form>
 
