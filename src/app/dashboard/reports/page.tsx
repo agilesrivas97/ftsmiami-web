@@ -60,7 +60,7 @@ const ReportsPage: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto p-4 bg-white">
+    <div className="container mx-auto p-4 bg-white text-black">
       <h1 className="text-2xl font-bold mb-4">Report Management</h1>
       <div className="flex justify-between items-center mb-4">
         <input
@@ -76,7 +76,7 @@ const ReportsPage: React.FC = () => {
             );
           }}
         />
-        <button onClick={() => setModalIsOpen(true)} className="block text-white bg-primary hover:bg-primary/50 focus:ring-4 focus:outline-hidden focus:ring-blue-300 font-medium rounded-sm-lg text-sm px-5 py-2.5 text-center dark:bg-primary dark:hover:bg-primary/70 dark:focus:ring-blue-800" type="button">
+        <button onClick={() => setModalIsOpen(true)} className="block text-white bg-primary hover:bg-primary/50 focus:ring-4 rounded-md focus:outline-hidden focus:ring-blue-300 font-medium rounded-sm-lg text-sm px-5 py-2.5 text-center dark:bg-primary dark:hover:bg-primary/70 dark:focus:ring-blue-800" type="button">
           Add Report
         </button>
       </div>

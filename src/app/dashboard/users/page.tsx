@@ -89,7 +89,7 @@ const UsersPage: React.FC = () => {
             );
           }}
         />
-        <button onClick={() => setModalIsOpen(true)} className="block text-white bg-primary hover:bg-primary/50 focus:ring-4 focus:outline-hidden focus:ring-blue-300 font-medium rounded-sm-lg text-sm px-5 py-2.5 text-center dark:bg-primary dark:hover:bg-primary/70 dark:focus:ring-blue-800" type="button">
+        <button onClick={() => setModalIsOpen(true)} className="block text-white bg-primary hover:bg-primary/50 focus:ring-4 rounded-md focus:outline-hidden focus:ring-blue-300 font-medium rounded-sm-lg text-sm px-5 py-2.5 text-center dark:bg-primary dark:hover:bg-primary/70 dark:focus:ring-blue-800" type="button">
           Add user
         </button>
       </div>

@@ -12,10 +12,8 @@ export default function Home() {
 
 
   useEffect(() => {
-    // Whenever the user explicitly chooses light mode
-    localStorage.currentTheme = "light";
-
-}, []);
+    localStorage.removeItem('theme');
+  }, []);
 
   useEffect(() => {
     const token = localStorage.getItem('token'); 

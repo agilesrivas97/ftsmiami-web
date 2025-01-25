@@ -27,7 +27,7 @@ const DashboardPage: React.FC = () => {
   };
 
   return (
-    <div className="p-4">
+    <div className="p-4 text-black">
       <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
       <div className="mb-4">
         <h2 className="text-xl font-semibold">Reports</h2>
