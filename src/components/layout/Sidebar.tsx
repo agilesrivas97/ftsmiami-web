@@ -1,18 +1,23 @@
 'use client'
 import Link from 'next/link';
 import React from 'react';
+import Image from 'next/image';
+import Fts from '@/assets/images/FTS-Logo.png';
 
 const Sidebar: React.FC = () => {
     return (
         <div
-            className="relative flex h-screen w-full max-w-[15rem] flex-col  bg-white bg-clip-border p-4 text-gray-700 shadow-xl shadow-blue-gray-900/5">
-
+            className="relative flex h-screen w-full max-w-[15rem] flex-col  bg-foreground bg-clip-border p-4 text-white shadow-xl shadow-blue-gray-900/5">
             <div className="p-4 mb-2"> 
-                <h5 className="block font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
-                    Admin Panel
-                </h5>
+                <Image
+                    src={Fts}
+                    alt="Federal Tactical Security"
+                    width={500}
+                    height={100}
+                    priority
+                    />
             </div>
-            <nav className="flex min-w-[240px] flex-col gap-1 p-2 font-sans text-base font-normal text-blue-gray-700">
+            <nav className="flex min-w-[280px] flex-col gap-1 p-2 font-sans text-base font-normal ">
                 <Link href="/dashboard"
                     className="flex items-center w-full p-3 leading-tight transition-all rounded-lg outline-hidden text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
                     <div className="grid mr-4 place-items-center">

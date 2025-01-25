@@ -4,6 +4,7 @@ import Fts from '@/assets/images/FTS-Logo.png';
 import Image from 'next/image';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import './login.module.css';
 
 const LoginPage: React.FC = () => {
 
@@ -13,12 +14,7 @@ const LoginPage: React.FC = () => {
   
     const handleLogin = async (e: React.FormEvent) => {
       e.preventDefault();
-  
-      document.cookie = "token=1";
-      router.push('/dashboard');
-
-      /*
-      const res = await fetch('/api/auth/login', {
+      const res = await fetch('http://localhost:8000/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
@@ -26,11 +22,12 @@ const LoginPage: React.FC = () => {
   
       if (res.ok) {
         const data = await res.json();
-        localStorage.setItem('token', data.token);
+        localStorage.setItem('token', data.access_token);
+        document.cookie = "token=" + data.access_token;
         router.push('/dashboard');
       } else {
         alert('Invalid credentials');
-      } */
+      } 
     };
 
 
@@ -39,13 +36,13 @@ const LoginPage: React.FC = () => {
         <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
             <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                 <Image src={Fts} alt="Fts Miami Admin" className={"mx-auto h-50 w-auto"} />
-                <h2 className="mt-5 text-center text-2xl/9 font-bold tracking-tight text-white">Sign in to your account</h2>
+                <h2 className="mt-3 text-center text-2xl/9 font-bold tracking-tight text-white">Sign in to your account</h2>
             </div>
 
             <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
                 <form className="space-y-6" onSubmit={handleLogin}>
                     <div>
-                        <label htmlFor="email" className="block text-sm/6 font-medium text-white-900">Email address</label>
+                        <label htmlFor="email" className="block text-sm/6 font-medium text-white">Email address</label>
                         <div className="mt-2">
                             <input type="email" name="email" id="email"
                              onChange={(e) => setEmail(e.target.value)}
@@ -57,9 +54,9 @@ const LoginPage: React.FC = () => {
                     <div>
                         <div className="flex items-center justify-between">
                             <label htmlFor="password" 
-                            className="block text-sm/6 font-medium text-white-900">Password</label>
+                            className="block text-sm/6 font-medium text-white">Password</label>
                             <div className="text-sm">
-                                <a href="#" className="font-semibold text-white-600 hover:text-gray-500">Forgot password?</a>
+                                <a href="#" className="font-semibold text-white hover:text-gray">Forgot password?</a>
                             </div>
                         </div>
                         <div className="mt-2">
@@ -71,14 +68,14 @@ const LoginPage: React.FC = () => {
                     </div>
 
                     <div>
-                        <button type="submit" className="flex w-full justify-center rounded-md bg-[#A0153E] px-3 py-1.5 text-sm/6 font-semibold text-white shadow-2xs hover:bg-[#FF204E] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#FF204E]">Sign in</button>
+                        <button type="submit" className="flex w-full justify-center rounded-md bg-color-button px-3 py-1.5 text-sm/6 font-semibold text-white shadow-2xs hover:bg-[#0a0a0a] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#FF204E]">Sign in</button>
                     </div>
                 </form>
 
-                <p className="mt-10 text-center text-md/6 text-white-500">
+                <p className="mt-10 text-center text-md/6 text-white">
                     License
                     <br />
-                    <a href="#" className="font-semibold text-black-600 hover:text-gray-500">B 2500149</a>
+                    <a href="#" className="font-semibold text-white">B 2500149</a>
                 </p>
             </div>
         </div>

@@ -19,7 +19,8 @@ const styles = {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        height: '100vh'
+        height: '100vh',
+        backgroundColor: '#000',
     },
     loginBox: {
         width: '500px',
