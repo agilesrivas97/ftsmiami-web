@@ -23,6 +23,7 @@ const LoginPage: React.FC = () => {
       if (res.ok) {
         const data = await res.json();
         localStorage.setItem('token', data.access_token);
+        localStorage.setItem('user', JSON.stringify(data.user));
         document.cookie = "token=" + data.access_token;
         router.push('/dashboard');
       } else {
