@@ -29,7 +29,7 @@ export default function Home() {
 
 
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-foreground">
+    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-black">
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-center">
         <Image
           src={Fts}
@@ -51,14 +51,14 @@ export default function Home() {
 
         <div className="flex gap-4 items-center flex-col sm:flex-row text-white">
           <a
-            className="rounded-sm-full border border-solid border-transparent transition-colors flex items-center justify-center bg-primary text-white gap-2 hover:bg-secondary hover:text-black text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
+            className="rounded-sm border border-solid border-transparent transition-colors flex items-center justify-center bg-primary text-white gap-2 hover:bg-secondary hover:text-white text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
             href="https://ftsmiami.com"
             rel="noopener noreferrer"
           >
             FTS Page
           </a>
           <a
-            className="rounded-sm-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
+            className="rounded-4xl border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
             href="/dashboard"
             rel="noopener noreferrer"
           >
