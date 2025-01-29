@@ -85,6 +85,8 @@ const UsersPage: React.FC = () => {
         console.error("An unknown error occurred");
         console.log(error);
       }
+    } finally {
+      await loadUsers();
     } 
 
   };
@@ -104,7 +106,9 @@ const UsersPage: React.FC = () => {
         console.error("An unknown error occurred");
         console.log(error);
       }
-    } 
+    } finally {
+      await loadUsers();
+    }
   };
 
   const handleEditUser = async (newUser: User) => {
@@ -123,6 +127,8 @@ const UsersPage: React.FC = () => {
         console.error("An unknown error occurred");
         console.log(error);
       }
+    }finally {
+      await loadUsers();
     } 
 
 
@@ -150,7 +156,7 @@ const UsersPage: React.FC = () => {
         Staff
       </span>); 
     } else {
-      return ( <span className="bg-gray-100 text-gray-100 text-xs font-medium me-2 px-2.5 py-1.5 rounded-sm  border border-gray-400">
+      return ( <span className="bg-gray-100 text-black text-xs font-medium me-2 px-2.5 py-1.5 rounded-sm  border border-gray-400">
         Securities
       </span>); 
     }
@@ -158,8 +164,7 @@ const UsersPage: React.FC = () => {
 
   return (
     <div className="container mx-auto p-4 bg-white  ">
-      <h1 className="text-2xl font-bold mb-4">User Management</h1>
-      <div className="flex justify-between items-center mb-4">
+      <div className="flex justify-between items-center mb-4 ">
         <input
           type="text"
           placeholder="Search users..."
@@ -172,13 +177,23 @@ const UsersPage: React.FC = () => {
             setFilteredUsers(filteredUsers);
           }}
         />
-        <button
-          onClick={() => setModalIsOpen(true)}
-          className="block text-white bg-primary hover:bg-primary/50 focus:ring-4 rounded-md focus:outline-hidden focus:ring-blue-300 font-medium rounded-sm-lg text-sm px-5 py-2.5 text-center dark:bg-primary dark:hover:bg-primary/70 dark:focus:ring-blue-800"
-          type="button"
-        >
-          Add user
-        </button>
+        <div className="flex w-1/3 ">
+          <button
+            onClick={loadUsers}
+            className="block  text-white bg-primary hover:bg-primary/50 focus:ring-4 rounded-md focus:outline-hidden focus:ring-blue-300 font-medium rounded-sm-lg text-sm px-5 py-2.5 text-center dark:bg-primary dark:hover:bg-primary/70 dark:focus:ring-blue-800"
+            type="button"
+          >
+            Refresh
+          </button>
+
+          <button
+            onClick={() => setModalIsOpen(true)}
+            className="block  text-white bg-primary hover:bg-primary/50 focus:ring-4 rounded-md focus:outline-hidden focus:ring-blue-300 font-medium rounded-sm-lg text-sm px-5 py-2.5 text-center dark:bg-primary dark:hover:bg-primary/70 dark:focus:ring-blue-800"
+            type="button"
+          >
+            Add user
+          </button>
+        </div>
       </div>
       <table className="w-full border-collapse rounded-sm-lg">
         <thead className="bg-gray-100">
@@ -201,7 +216,8 @@ const UsersPage: React.FC = () => {
                 <>
                   <td className="border px-4 py-2">
                     <button
-                      className="hidden bg-transparent text-black px-2 py-1 mr-2 hover:bg-gray-100 hover:rounded-sm-lg hover:text-gray-800"
+                                        type="button"
+                      className="hidden bg-transparent text-black px-2 py-1 mr-2 hover:bg-gray-100 hover:rounded-4xl hover:text-gray-800"
                       onClick={() => onShowUser(user.id)}
                     >
                       <svg
@@ -220,7 +236,8 @@ const UsersPage: React.FC = () => {
                       </svg>
                     </button>
                     <button
-                      className="bg-transparent text-black px-2 py-1 mr-2 hover:bg-blue-500 hover:rounded-sm-lg hover:text-white"
+                                        type="button"
+                      className="bg-transparent text-black px-2 py-1 mr-2 hover:bg-blue-500 hover:rounded hover:text-white"
                       onClick={() => onClickUpdatedUser(user.id)}
                     >
                       <svg
@@ -239,7 +256,8 @@ const UsersPage: React.FC = () => {
                       </svg>
                     </button>
                     <button
-                      className="bg-transparent text-red  px-2 py-1 hover:bg-red-500 hover:rounded-sm-lg hover:text-white"
+                    type="button"
+                      className="bg-transparent text-red  px-2 py-1 hover:bg-red-500 hover:rounded hover:text-white"
                       onClick={() => handleDeleteUser(user.id)}
                     >
                       <svg
@@ -261,7 +279,7 @@ const UsersPage: React.FC = () => {
                 </>
               ) : (
                 <td className="border px-4 py-2">
-                  <span className="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm border border-red-400">
+                  <span className="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 hover:rounded-4xl border border-red-400">
                     Sin permiso
                   </span>
                 </td>
@@ -276,7 +294,7 @@ const UsersPage: React.FC = () => {
         setOpen={setModalIsOpen}
         handleAddUser={handleAddUser}
         handleEditUser={handleEditUser}
-        handleModalClose={() => setModalIsOpen(false)}
+        handleModalClose={() => {setModalIsOpen(false); setUserSelected(null);}}
         user={userSelected}
       />
     </div>

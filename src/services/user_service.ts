@@ -69,3 +69,30 @@ export async function deleteUser(id: number, token: string): Promise<void> {
         throw new Error(`Failed to delete user with id ${id}`);
     }
 }
+
+export async function loginUser(email: string, password: string): Promise<{ token: string }> {
+    const response = await fetch(`${API_URL}/auth/login`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+    });
+    if (!response.ok) {
+        if (response.status === 401) {
+            throw new Error('Unauthorized: Invalid credentials');
+        }
+        throw new Error('Failed to login');
+    }
+    return response.json();
+}
+
+export async function logoutUser(token: string): Promise<void> {
+    const response = await fetchWithToken(`${API_URL}/auth/logout`, { method: 'POST' }, token);
+    if (!response.ok) {
+        if (response.status === 401) {
+            throw new Error('Unauthorized: Invalid token');
+        }
+        throw new Error('Failed to logout');
+    }
+}

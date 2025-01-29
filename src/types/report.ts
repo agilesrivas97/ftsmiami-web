@@ -1,0 +1,43 @@
+export interface Report {
+    id: number;
+    type_incident: string;
+    incident: string;
+    date_incident: string;
+    time_incident: string;
+    at_time_incident?: boolean;
+    delayed_person?: boolean;
+    delayed_telephone?: boolean;
+    reason_delay?: string;
+    authorities_notified?: boolean;
+    by_whom?: string;
+    type_assistance?: string;
+    vehicule?: string;
+    time_arrival?: string;
+    report_case?: string;
+    location?: string;
+    type_premises?: string;
+    exact_location_incident?: string;
+    client_notified?: boolean;
+    time_notified?: string;
+    who_notified?: string;
+    manager_notified?: boolean;
+    time_manager_notified?: string;
+    witness_incident?: boolean;
+    area_of_incident?: boolean;
+    date_sec_officer?: string;
+    time_sec_officer?: string;
+    photographs_taken_area?: boolean;
+    present_location?: string;
+    any_hazard_time_inspection?: boolean;
+    narrative?: string;
+    officer_name: string;
+    date_reporting_officer?: string;
+    reviewed_supervisor?: string;
+    supervisor_comments?: string;
+    date_reviewed?: string;
+    complainants?: any[];
+    victims?: any[];
+    suspects?: any[];
+    witnesses?: any[];
+  }
+
