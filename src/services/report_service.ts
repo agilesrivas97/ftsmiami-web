@@ -1,11 +1,14 @@
+import { PDF } from "@/types/pdf";
 import { Report } from "@/types/report";
 
 const API_URL = 'http://localhost:8000/api';
 
 
-async function fetchWithToken(url: string, options: RequestInit, token: string) {
+async function fetchWithToken(url: string, options: RequestInit, token: string | undefined) {
     const headers = new Headers(options.headers || {});
-    headers.append('Authorization', `Bearer ${token}`);
+    if(token){
+        headers.append('Authorization', `Bearer ${token}`);
+    }
     headers.append('Content-Type', 'application/json');
     return fetch(url, { ...options, headers });
 }
@@ -30,6 +33,12 @@ export async function getReportByid(id: number, token: string): Promise<Report> 
         throw new Error(`Failed to fetch report with id ${id}`);
     }
     return response.json();
+}
+
+export  async function getLinkTemporal(id: number): Promise<PDF> {
+    return {
+        url: `${API_URL}/generate-pdf/${id}`
+    };
 }
 
 
