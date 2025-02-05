@@ -6,4 +6,5 @@ export interface User {
     password: string;
     password_confirmed: string;
     id_role: number;
+    person?: any;
   }

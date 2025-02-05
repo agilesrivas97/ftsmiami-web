@@ -1,9 +1,28 @@
 "use client";
+import { getUserById, updateUser } from "@/services/user_service";
 import { User } from "@/types/user";
 import React, { useEffect, useState } from "react";
 
 const ProfilePage: React.FC = () => {
   const [auth, setAuth] = useState<User>();
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    if(auth){
+      const updatedPerson = { ...auth.person, [name]: value, age:1, genre:'1' };
+      if (name === "username") {
+        setAuth({ ...auth, ['name']: value }) ;
+      }
+      if(name === "email"){
+        setAuth({ ...auth, ['email']: value }) ;
+      }
+  
+      setAuth( { ...auth, person: updatedPerson });
+    }
+
+
+   
+  };
 
   useEffect(() => {
     load();
@@ -22,24 +41,48 @@ const ProfilePage: React.FC = () => {
       if (!token) {
         throw new Error("No token found");
       }
-
-      const user = localStorage.getItem("user");
-      if (user) {
-        setAuth(JSON.parse(user));
+      const auth = localStorage.getItem("user");
+      if (auth) {
+        const parsedAuth = JSON.parse(auth);
+        const user = await getUserById(parsedAuth.id, token);
+        setAuth(user ? user : parsedAuth);
       }
     } catch (error) {
       if (error instanceof Error) {
         unhautorized();
       } else {
-        console.error("An unknown error occurred");
         console.log(error);
       }
     }
   };
 
+  const onSubmit = async (e:any) => {
+    e.preventDefault();
+
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        throw new Error("No token found");
+      }
+
+      if (auth) {
+        console.log(auth)
+        await updateUser(auth.id, auth, token);
+      }
+
+    } catch (error) {
+      if (error instanceof Error) {
+        unhautorized();
+      } else {
+        console.log(error);
+      }
+    }
+
+  }
+
   return (
     <form
-      onSubmit={(e) => e.preventDefault()}
+      onSubmit={onSubmit}
       className="space-y-12 px-10 py-5 "
     >
       <div className=" ">
@@ -55,39 +98,24 @@ const ProfilePage: React.FC = () => {
           <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
             <div className="sm:col-span-3">
               <label
-                htmlFor="first-name"
+                htmlFor="name"
                 className="block text-sm/6 font-medium text-gray-900"
               >
-                First name
+                Full name
               </label>
               <div className="mt-2">
                 <input
                   type="text"
-                  name="first-name"
-                  id="first-name"
+                  name="name"
+                  id="name"
+                  value={auth && auth.person ? auth.person.name : null}
+                  onChange={handleInputChange}
                   autoComplete="given-name"
                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                 />
               </div>
             </div>
 
-            <div className="sm:col-span-3">
-              <label
-                htmlFor="last-name"
-                className="block text-sm/6 font-medium text-gray-900"
-              >
-                Last name
-              </label>
-              <div className="mt-2">
-                <input
-                  type="text"
-                  name="last-name"
-                  id="last-name"
-                  autoComplete="family-name"
-                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                />
-              </div>
-            </div>
             <div className="sm:col-span-3">
               <label
                 htmlFor="username"
@@ -104,9 +132,10 @@ const ProfilePage: React.FC = () => {
                     type="text"
                     name="username"
                     value={auth?.name}
+                    onChange={handleInputChange}
                     id="username"
                     className="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"
-                    placeholder="janesmith"
+                    placeholder="fts miami"
                   />
                 </div>
               </div>
@@ -122,6 +151,7 @@ const ProfilePage: React.FC = () => {
               <div className="mt-2">
                 <input
                   id="email"
+                  onChange={handleInputChange}
                   name="email"
                   type="email"
                   autoComplete="email"
@@ -131,43 +161,9 @@ const ProfilePage: React.FC = () => {
               </div>
             </div>
 
-            <div className="sm:col-span-3">
-              <label
-                htmlFor="country"
-                className="block text-sm/6 font-medium text-gray-900"
-              >
-                Country
-              </label>
-              <div className="mt-2 grid grid-cols-1">
-                <select
-                  id="country"
-                  name="country"
-                  autoComplete="country-name"
-                  className="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 pr-8 pl-3 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                >
-                  <option>United States</option>
-                  <option>Canada</option>
-                  <option>Mexico</option>
-                </select>
-                <svg
-                  className="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4"
-                  viewBox="0 0 16 16"
-                  fill="currentColor"
-                  aria-hidden="true"
-                  data-slot="icon"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-              </div>
-            </div>
-
             <div className="col-span-3">
               <label
-                htmlFor="street-address"
+                htmlFor="address"
                 className="block text-sm/6 font-medium text-gray-900"
               >
                 Street address
@@ -175,9 +171,30 @@ const ProfilePage: React.FC = () => {
               <div className="mt-2">
                 <input
                   type="text"
-                  name="street-address"
-                  id="street-address"
-                  autoComplete="street-address"
+                  name="address"
+                  onChange={handleInputChange}
+                  id="address"
+                  value={auth && auth.person ? auth.person.address : null}
+                  autoComplete="address"
+                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                />
+              </div>
+            </div>
+
+            <div className="col-span-3">
+              <label
+                htmlFor="phono"
+                className="block text-sm/6 font-medium text-gray-900"
+              >
+               Phono
+              </label>
+              <div className="mt-2">
+                <input
+                  type="text"
+                  name="phono"
+                  onChange={handleInputChange}
+                  id="phono"
+                  value={auth && auth.person ? auth.person.address : null}
                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                 />
               </div>
@@ -194,7 +211,9 @@ const ProfilePage: React.FC = () => {
                 <input
                   type="text"
                   name="city"
+                  onChange={handleInputChange}
                   id="city"
+                  value={auth && auth.person ? auth.person.city : null}
                   autoComplete="address-level2"
                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                 />
@@ -203,7 +222,7 @@ const ProfilePage: React.FC = () => {
 
             <div className="sm:col-span-2">
               <label
-                htmlFor="region"
+                htmlFor="state"
                 className="block text-sm/6 font-medium text-gray-900"
               >
                 State / Province
@@ -211,9 +230,11 @@ const ProfilePage: React.FC = () => {
               <div className="mt-2">
                 <input
                   type="text"
-                  name="region"
-                  id="region"
+                  name="state"
+                  id="state"
+                  onChange={handleInputChange}
                   autoComplete="address-level1"
+                  value={auth && auth.person ? auth.person.state : null}
                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                 />
               </div>
@@ -221,7 +242,7 @@ const ProfilePage: React.FC = () => {
 
             <div className="sm:col-span-2">
               <label
-                htmlFor="postal-code"
+                htmlFor="zip"
                 className="block text-sm/6 font-medium text-gray-900"
               >
                 ZIP / Postal code
@@ -229,9 +250,11 @@ const ProfilePage: React.FC = () => {
               <div className="mt-2">
                 <input
                   type="text"
-                  name="postal-code"
-                  id="postal-code"
-                  autoComplete="postal-code"
+                  name="zip"
+                  id="zip"
+                  autoComplete="zip"
+                  onChange={handleInputChange}
+                  value={auth && auth.person ? auth.person.zip : null}
                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                 />
               </div>
@@ -257,9 +280,9 @@ const ProfilePage: React.FC = () => {
                     data-slot="icon"
                   >
                     <path
-                      fill-rule="evenodd"
+                      fillRule="evenodd"
                       d="M1.5 6a2.25 2.25 0 0 1 2.25-2.25h16.5A2.25 2.25 0 0 1 22.5 6v12a2.25 2.25 0 0 1-2.25 2.25H3.75A2.25 2.25 0 0 1 1.5 18V6ZM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0 0 21 18v-1.94l-2.69-2.689a1.5 1.5 0 0 0-2.12 0l-.88.879.97.97a.75.75 0 1 1-1.06 1.06l-5.16-5.159a1.5 1.5 0 0 0-2.12 0L3 16.061Zm10.125-7.81a1.125 1.125 0 1 1 2.25 0 1.125 1.125 0 0 1-2.25 0Z"
-                      clip-rule="evenodd"
+                      clipRule="evenodd"
                     />
                   </svg>
                   <div className="mt-4 flex text-sm/6 text-gray-600">
@@ -290,9 +313,7 @@ const ProfilePage: React.FC = () => {
       </div>
 
       <div className="mt-6 flex items-center justify-end gap-x-6">
-        <button type="button" className="text-sm/6 font-semibold text-gray-900">
-          Cancel
-        </button>
+
         <button
           type="submit"
           className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"

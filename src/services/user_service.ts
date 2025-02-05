@@ -35,7 +35,7 @@ export async function getUserById(id: number, token: string): Promise<User> {
 export async function createUser(user: User, token: string): Promise<User> {
     const response = await fetchWithToken(`${API_URL}/auth/register`, {
         method: 'POST',
-        body: JSON.stringify({...user, auth: true}),
+        body: JSON.stringify({...user, auth: false}),
     }, token);
     if (!response.ok) {
         if (response.status === 401) {
@@ -48,7 +48,7 @@ export async function createUser(user: User, token: string): Promise<User> {
 
 export async function updateUser(id: number, user: Partial<User>, token: string): Promise<User> {
     const response = await fetchWithToken(`${API_URL}/users/${id}`, {
-        method: 'PUT',
+        method: 'PATCH',
         body: JSON.stringify(user),
     }, token);
     if (!response.ok) {
