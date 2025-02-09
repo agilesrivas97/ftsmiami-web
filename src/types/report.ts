@@ -11,7 +11,7 @@ export interface Report {
     authorities_notified?: boolean;
     by_whom?: string;
     type_assistance?: string;
-    vehicule?: string;
+    vehicle?: string;
     time_arrival?: string;
     report_case?: string;
     location?: string;
