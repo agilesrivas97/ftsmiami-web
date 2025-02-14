@@ -12,6 +12,7 @@ interface ModalReportProps {
 
 const initialReport: Report = {
   id: 0,
+  case_number:'',
   type_incident: '',
   incident: '',
   date_incident: '',
@@ -89,76 +90,6 @@ const ModalReport: React.FC<ModalReportProps> = (props) => {
             <div className="grid gap-4 mb-4 grid-cols-2">
               <div className="col-span-2">
                 <label
-                  htmlFor="type_incident"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  Type of Incident
-                </label>
-                <input
-                  type="text"
-                  name="type_incident"
-                  id="type_incident"
-                  value={newReport.type_incident}
-                  onChange={handleInputChange}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                  placeholder="Type of Incident"
-                  required={true}
-                />
-              </div>
-              <div className="col-span-2">
-                <label
-                  htmlFor="incident"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  Incident
-                </label>
-                <input
-                  type="text"
-                  name="incident"
-                  id="incident"
-                  value={newReport.incident}
-                  onChange={handleInputChange}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                  placeholder="Incident"
-                  required={true}
-                />
-              </div>
-              <div className="col-span-2 sm:col-span-1">
-                <label
-                  htmlFor="date_incident"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  Date of Incident
-                </label>
-                <input
-                  type="date"
-                  name="date_incident"
-                  id="date_incident"
-                  value={newReport.date_incident}
-                  onChange={handleInputChange}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                  required={true}
-                />
-              </div>
-              <div className="col-span-2 sm:col-span-1">
-                <label
-                  htmlFor="time_incident"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  Time of Incident
-                </label>
-                <input
-                  type="time"
-                  name="time_incident"
-                  id="time_incident"
-                  value={newReport.time_incident}
-                  onChange={handleInputChange}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                  required={true}
-                />
-              </div>
-              <div className="col-span-2">
-                <label
                   htmlFor="narrative"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
@@ -168,6 +99,23 @@ const ModalReport: React.FC<ModalReportProps> = (props) => {
                   name="narrative"
                   id="narrative"
                   value={newReport.narrative}
+                  onChange={(e) => handleInputChange(e)}
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                  placeholder="Narrative"
+                  required={true}
+                />
+              </div>
+              <div className="col-span-2">
+                <label
+                  htmlFor="supervisor_comments"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Comments by supervisor
+                </label>
+                <textarea
+                  name="supervisor_comments"
+                  id="supervisor_comments"
+                  value={newReport.supervisor_comments}
                   onChange={(e) => handleInputChange(e)}
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                   placeholder="Narrative"

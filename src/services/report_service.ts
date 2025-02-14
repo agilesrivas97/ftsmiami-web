@@ -1,5 +1,6 @@
 import { PDF } from "@/types/pdf";
 import { Report } from "@/types/report";
+import { Summary } from '@/types/summary';
 
 const API_URL = 'http://localhost:8000/api';
 
@@ -15,6 +16,17 @@ async function fetchWithToken(url: string, options: RequestInit, token: string |
 
 export async function getReports(token: string): Promise<Report[]> {
     const response = await fetchWithToken(API_URL + "/reports", { method: 'GET' }, token);
+    if (!response.ok) {
+        if (response.status === 401) {
+            throw new Error('Unauthorized: Invalid token');
+        }
+        throw new Error('Failed to fetch users');
+    }
+    return response.json();
+}
+
+export async function getSummary(token: string): Promise<Summary> {
+    const response = await fetchWithToken(API_URL + "/report/summary", { method: 'GET' }, token);
     if (!response.ok) {
         if (response.status === 401) {
             throw new Error('Unauthorized: Invalid token');

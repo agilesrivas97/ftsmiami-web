@@ -2,18 +2,20 @@
 
 import ReportDropdown from '@/components/common/ReportDropdown';
 import ModalReport from '@/components/forms/ModalReport';
+import { sendEmailReport } from '@/services/email_sender';
 import { deleteReport, getLinkTemporal, getReportByid, getReports, updateReport } from '@/services/report_service';
 import { Report } from '@/types/report';
 import { User } from '@/types/user';
 import React, { useRef, useState } from 'react';
 import { useEffect } from 'react';
+import Swal from 'sweetalert2';
 
 
 const initialReports: Report[] = [];
 
 const ReportsPage: React.FC = () => {
   const [reports, setReports] = useState<Report[]>(initialReports);
-  const [newReport, setNewReport] = useState<Report>({ id: 0, type_incident: '', incident: '', date_incident: '',time_incident:'', officer_name: '', supervisor_comments: '' });
+  const [newReport, setNewReport] = useState<Report>({ id: 0, case_number:'', type_incident: '', incident: '', date_incident: '',time_incident:'', officer_name: '', supervisor_comments: '' });
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [filteredReport, setFilteredReport] = useState<Report[]>(initialReports);
   const [auth, setAuth] = useState<User>();
@@ -51,7 +53,7 @@ const ReportsPage: React.FC = () => {
          setAuth(JSON.parse(user));
        }
      } catch (error) {
-       if (error instanceof Error ) {
+       if (error instanceof Error && error.message.includes("Invalid token")) {
          unhautorized();
        } else {
          console.error("An unknown error occurred");
@@ -146,6 +148,46 @@ const ReportsPage: React.FC = () => {
      }
    };
 
+   const onTakeEmail = (id:string) => {
+    Swal.fire({
+      title: "Insert the company email",
+      input: "text",
+      inputAttributes: {
+        autocapitalize: "off"
+      },
+      showCancelButton: true,
+      confirmButtonText: "Send",
+      showLoaderOnConfirm: true,
+      preConfirm: async (email) => {
+        try {
+          await onSendEmail(id,email)
+        } catch (error) {
+          Swal.showValidationMessage(`
+            Request failed: ${error}
+          `);
+        }
+      },
+      allowOutsideClick: () => !Swal.isLoading()
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: `Sended report Ok`
+        });
+      }
+    });
+   }
+
+  const onSendEmail = async (id: string, email:string) => {
+    try {
+      // Assuming sendEmail is a function from your service to send an email
+      await sendEmailReport(id, email);
+      alert("Email sent successfully");
+    } catch (error) {
+        console.error("An unknown error occurred");
+        console.log(error);
+      }
+  };
+
   return (
     <div className="container mx-auto p-4 bg-white text-black">
       <div className="flex justify-between items-center mb-4">
@@ -157,6 +199,7 @@ const ReportsPage: React.FC = () => {
             const searchTerm = e.target.value.toLowerCase();
             const filteredReport = reports.filter((report) =>
               `${report.incident}`.toLowerCase().includes(searchTerm) || `${report.officer_name}`.toLowerCase().includes(searchTerm)
+            || `${report.case_number}`.toLowerCase().includes(searchTerm)
             );
             setFilteredReport(filteredReport);
           }}
@@ -173,7 +216,7 @@ const ReportsPage: React.FC = () => {
       <table className="w-full border-collapse rounded-2xl">
         <thead className='bg-gray-100'>
           <tr>
-            <th className="border py-2">ID</th>
+            <th className="border py-2">Case</th>
             <th className="border py-2">Type of Incident</th>
             <th className="border py-2">Incident</th>
             <th className="border py-2">Date of Incident</th>
@@ -186,7 +229,7 @@ const ReportsPage: React.FC = () => {
         <tbody>
           {filteredReport.map(report => (
             <tr key={report.id} className='text-center'>
-              <td className="border px-4 py-2">{report.id}</td>
+              <td className="border px-4 py-2">{report.case_number}</td>
               <td className="border px-4 py-2">{report.type_incident}</td>
               <td className="border px-4 py-2">{report.incident}</td>
               <td className="border px-4 py-2">{report.date_incident} {report.time_incident}</td>
@@ -201,6 +244,7 @@ const ReportsPage: React.FC = () => {
              onShowPDF={onShowReport}
              onGeneratePDF={onGeneratedTemporalLink}
              handleEdit={onClickUpdatedReport}
+             onSendEmail={onTakeEmail}
              onDeleteReport={handleDeleteReport} />
 
               </td>

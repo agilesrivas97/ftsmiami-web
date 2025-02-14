@@ -164,34 +164,35 @@ const UsersPage: React.FC = () => {
 
   return (
     <div className="container mx-auto p-4 bg-white  ">
-      <div className="flex justify-between items-center mb-4 ">
+      <div className="flex justify-between items-center mb-4">
         <input
           type="text"
           placeholder="Search users..."
           className="border rounded-sm-lg p-2 w-1/3"
           onChange={(e) => {
-            const searchTerm = e.target.value.toLowerCase();
-            const filteredUsers = users.filter((user) =>
-              `${user.name}`.toLowerCase().includes(searchTerm)
-            );
-            setFilteredUsers(filteredUsers);
+        const searchTerm = e.target.value.toLowerCase();
+        const filteredUsers = users.filter((user) =>
+          `${user.name}`.toLowerCase().includes(searchTerm)
+        );
+        setFilteredUsers(filteredUsers);
           }}
         />
-        <div className="flex w-1/3 ">
-          <button
-            onClick={loadUsers}
-            className="block  text-white bg-primary hover:bg-primary/50 focus:ring-4 rounded-md focus:outline-hidden focus:ring-blue-300 font-medium rounded-sm-lg text-sm px-5 py-2.5 text-center dark:bg-primary dark:hover:bg-primary/70 dark:focus:ring-blue-800"
-            type="button"
-          >
-            Refresh
-          </button>
 
+        
+        <div className="flex w-1/3 justify-end space-x-4 gap-4">
           <button
-            onClick={() => setModalIsOpen(true)}
-            className="block  text-white bg-primary hover:bg-primary/50 focus:ring-4 rounded-md focus:outline-hidden focus:ring-blue-300 font-medium rounded-sm-lg text-sm px-5 py-2.5 text-center dark:bg-primary dark:hover:bg-primary/70 dark:focus:ring-blue-800"
-            type="button"
+        onClick={loadUsers}
+        className="text-white bg-primary hover:bg-primary/50 focus:ring-4 rounded-md focus:outline-hidden focus:ring-blue-300 font-medium rounded-sm-lg text-sm px-5 py-2.5 text-center dark:bg-primary dark:hover:bg-primary/70 dark:focus:ring-blue-800"
+        type="button"
           >
-            Add user
+        Refresh
+          </button>
+          <button
+        onClick={() => setModalIsOpen(true)}
+        className="text-white bg-primary hover:bg-primary/50 focus:ring-4 rounded-md focus:outline-hidden focus:ring-blue-300 font-medium rounded-sm-lg text-sm px-5 py-2.5 text-center dark:bg-primary dark:hover:bg-primary/70 dark:focus:ring-blue-800"
+        type="button"
+          >
+        Add user
           </button>
         </div>
       </div>

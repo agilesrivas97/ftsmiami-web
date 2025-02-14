@@ -1,5 +1,6 @@
 export interface Report {
     id: number;
+    case_number:string;
     type_incident: string;
     incident: string;
     date_incident: string;
@@ -10,10 +11,8 @@ export interface Report {
     reason_delay?: string;
     authorities_notified?: boolean;
     by_whom?: string;
-    type_assistance?: string;
-    vehicle?: string;
-    time_arrival?: string;
-    report_case?: string;
+    assistences?: any[];
+    attachment?: any[];
     location?: string;
     type_premises?: string;
     exact_location_incident?: string;
