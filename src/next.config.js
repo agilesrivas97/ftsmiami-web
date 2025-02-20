@@ -1,10 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    reactStrictMode: true,
-    experimental: {
-      appDir: true, // Si usas la carpeta `app`, habilita esta opción
-    },
-  };
+  reactStrictMode: true,
+  experimental: {
+    appDir: true, // Solo si usas la carpeta "app"
+  },
+};
 
 module.exports = nextConfig;
   
