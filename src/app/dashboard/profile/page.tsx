@@ -183,18 +183,18 @@ const ProfilePage: React.FC = () => {
 
             <div className="col-span-3">
               <label
-                htmlFor="phono"
+                htmlFor="phone"
                 className="block text-sm/6 font-medium text-gray-900"
               >
-               Phono
+               Phone
               </label>
               <div className="mt-2">
                 <input
                   type="text"
-                  name="phono"
+                  name="phone"
                   onChange={handleInputChange}
-                  id="phono"
-                  value={auth && auth.person ? auth.person.address : null}
+                  id="phone"
+                  value={auth && auth.person ? auth.person.phone : null}
                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                 />
               </div>
