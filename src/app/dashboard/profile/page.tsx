@@ -19,8 +19,6 @@ const ProfilePage: React.FC = () => {
   
       setAuth( { ...auth, person: updatedPerson });
     }
-
-
    
   };
 
