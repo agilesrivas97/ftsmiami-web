@@ -2,7 +2,7 @@ import { PDF } from "@/types/pdf";
 import { Report } from "@/types/report";
 import { Summary } from '@/types/summary';
 
-const API_URL = 'http://localhost:8000/api';
+const API_URL = 'https://api-report.ftsmiami.com/api';
 
 
 async function fetchWithToken(url: string, options: RequestInit, token: string | undefined) {
