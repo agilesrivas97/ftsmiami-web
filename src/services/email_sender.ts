@@ -2,7 +2,6 @@ import { Report } from "@/types/report";
 
 const API_URL = 'https://api-report.ftsmiami.com/api';
 
-
 async function fetchWithToken(url: string, options: RequestInit, token: string | undefined) {
     const headers = new Headers(options.headers || {});
     if(token){
