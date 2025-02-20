@@ -46,7 +46,7 @@ const ProfilePage: React.FC = () => {
         setAuth(user ? user : parsedAuth);
       }
     } catch (error) {
-      if (error instanceof Error) {
+      if (error instanceof Error && error.message.includes("Invalid token")) {
         unhautorized();
       } else {
         console.log(error);
@@ -64,8 +64,7 @@ const ProfilePage: React.FC = () => {
       }
 
       if (auth) {
-        console.log(auth)
-        await updateUser(auth.id, auth, token);
+        await updateUser(auth.id, {...auth, person: {...auth.person, email: auth.email}}, token);
       }
 
     } catch (error) {
