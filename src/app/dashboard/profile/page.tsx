@@ -68,7 +68,7 @@ const ProfilePage: React.FC = () => {
       }
 
     } catch (error) {
-      if (error instanceof Error) {
+      if (error instanceof Error && error.message.includes("Invalid token")) {
         unhautorized();
       } else {
         console.log(error);
