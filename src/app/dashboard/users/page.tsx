@@ -196,7 +196,8 @@ const UsersPage: React.FC = () => {
           </button>
         </div>
       </div>
-      <table className="w-full border-collapse rounded-sm-lg">
+     <div className="overflow-x-auto"> 
+     <table className="w-full border-collapse rounded-sm-lg">
         <thead className="bg-gray-100">
           <tr>
             <th className="border py-2">Name</th>
@@ -289,6 +290,7 @@ const UsersPage: React.FC = () => {
           ))}
         </tbody>
       </table>
+     </div>
 
       <ModalUser
         open={modalIsOpen}

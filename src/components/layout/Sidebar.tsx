@@ -7,11 +7,9 @@ import Fts from '@/assets/images/FTS-Logo.png';
 
 const Sidebar: React.FC = () => {
 
- 
-
     return (
         <div
-            className="relative flex h-screen w-full drop-shadow-md max-w-[16rem] flex-col z-30 bg-black bg-clip-border p-4 text-white shadow-sm-xl shadow-sm-blue-gray-900/5">
+            className=" hidden md:relative md:flex h-screen w-full drop-shadow-md max-w-[16rem] flex-col z-30 bg-black bg-clip-border p-4 text-white shadow-sm-xl shadow-sm-blue-gray-900/5">
             <div className="p-4 mb-2"> 
                 <Image
                     src={Fts}

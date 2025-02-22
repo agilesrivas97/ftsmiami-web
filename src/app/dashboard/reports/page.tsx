@@ -251,7 +251,9 @@ const ReportsPage: React.FC = () => {
           Refresh
         </button>
       </div>
-      <table className="w-full border-collapse rounded-2xl">
+
+      <div className="overflow-x-auto">
+      <table className="w-full border-collapse rounded-2xl ">
         <thead className="bg-gray-100">
           <tr>
             <th className="border py-2">Case</th>
@@ -402,6 +404,8 @@ const ReportsPage: React.FC = () => {
           ))}
         </tbody>
       </table>
+      </div>
+
 
       <ModalReport
         open={modalIsOpen}
