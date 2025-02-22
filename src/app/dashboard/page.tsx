@@ -70,40 +70,32 @@ const DashboardPage: React.FC = () => {
   return (
     <div className="p-4 text-black">
       <div className="mb-4">
-        <div className="report-cards flex justify-between">
-            <div className="card bg-primary w-1/3">
+        <div className="report-cards flex flex-wrap lg:flex-nowrap lg:flex-row w-full ">
+            <div className="card bg-primary w-full  lg:w-1/3 ">
                 <p className="tip">Month incidents</p>
                 <p className="second-text">{summary.total_reports_month}</p>
             </div>
-            <div className="card  w-1/3" style={{ backgroundColor: "#E16A54" }}>
+            <div className="card w-full  lg:w-1/3 " style={{ backgroundColor: "#E16A54" }}>
                 <p className="tip">Without comments</p>
                 <p className="second-text">{summary.reports_without_comments}</p>
             </div>
-            <div className="card w-1/3" style={{ backgroundColor: "#074799" }}>
+            <div className="card w-full  lg:w-1/3 " style={{ backgroundColor: "#074799" }}>
                 <p className="tip">Employees register</p>
                 <p className="second-text">{summary.total_security_users}</p>
             </div>
-            <div className="card w-1/3" style={{ backgroundColor: "#4B5945" }}>
+            <div className="card w-full  lg:w-1/3 " style={{ backgroundColor: "#4B5945" }}>
                 <p className="tip">Send Reports</p>
                 <p className="second-text">{summary.reports_with_comments}</p>
             </div>
-
         </div>
       </div>
 
-      <div className="flex flex-wrap justify-center -mx-2 my-30">
-        <div className=" hidden w-[30%]  px-2 mb-4">
-          <h2 className="text-xl font-semibold">Reportes de Incidentes</h2>
-          <Bar data={employeeData} width={100} height={100} />
-        </div>
-        <div className="w-[30%] px-2 mb-4">
+      <div className="flex flex-wrap justify-center -mx-2">
+        <div className="w-full lg:w-[40%] px-2 mb-4">
         <h2 className="text-xl text-center font-semibold">Incidents Distribution</h2>
-        <Pie data={pieData} width={100} height={100}/>
+        <Pie data={pieData} width={300} height={300}/>
       </div>
-      <div className=" hidden w-[30%] px-2 mb-4">
-          <h2 className="text-xl font-semibold">Reportes de Empleados</h2>
-          <Bar data={employeeData} width={100} height={100}/>
-        </div>
+
       </div>
 
 
