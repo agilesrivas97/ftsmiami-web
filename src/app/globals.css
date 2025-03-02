@@ -96,3 +96,8 @@ body {
   filter: blur(10px);
   transform: scale(0.9, 0.9);
 }
+
+.fixed-dropdown {
+  z-index: 9999999;
+  overflow: visible;
+}

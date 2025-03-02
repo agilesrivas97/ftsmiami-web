@@ -40,13 +40,13 @@ export const ResponsiveDropdown: React.FC<DropdownProps> = ({ trigger, items, on
   }
 
   return (
-    <div className="relative inline-block text-left" ref={dropdownRef}>
+    <div className="relative inline-block text-left " ref={dropdownRef}>
       <div onClick={handleToggle}>{trigger}</div>
       {isOpen && (
         <div
-          className={`absolute ${
-            dropdownPosition === "bottom" ? "top-full" : "bottom-full"
-          } right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-10`}
+          className={`fixed ${
+            dropdownPosition === "bottom" ? "top-16" : "bottom-16"
+          } right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50`}
         >
           <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
             {items.map((item, index) => (

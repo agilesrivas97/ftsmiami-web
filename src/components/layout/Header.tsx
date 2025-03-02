@@ -7,7 +7,9 @@ const screenTitles: { [key: string]: { title: string; description: string } } = 
   "/dashboard": { title: "Dashboard", description: "Overview of your activities" },
   "/dashboard/profile": { title: "Profile", description: "This information will be displayed publicly so be careful what you share." },
   "/dashboard/users": { title: "Users Management", description: "Manage users and roles" },
-  "/dashboard/reports": { title: "Reports Management", description: "View your reports" }
+  "/dashboard/reports": { title: "Reports Management", description: "View your reports" },
+  "/dashboard/companies": { title: "Companies Management", description: "View your companies" }
+
 };
 
 const Header: React.FC = () => {
