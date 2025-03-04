@@ -273,7 +273,6 @@ const ProfilePage: React.FC = () => {
                     className="mx-auto size-12 text-gray-300"
                     viewBox="0 0 24 24"
                     fill="currentColor"
-                    aria-hidden="true"
                     data-slot="icon"
                   >
                     <path

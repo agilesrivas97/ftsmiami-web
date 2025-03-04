@@ -28,10 +28,11 @@ export const ResponsiveDropdown: React.FC<DropdownProps> = ({ trigger, items, on
   }, [])
 
   const handleToggle = () => {
+    console.log("cLICK BUtton", isOpen)
     if (!isOpen) {
       const rect = dropdownRef.current?.getBoundingClientRect()
       if (rect) {
-        const spaceBelow = window.innerHeight - rect.bottom
+        const spaceBelow = window.innerHeight - (rect.bottom * 2)
         const spaceAbove = rect.top
         setDropdownPosition(spaceBelow > spaceAbove ? "bottom" : "top")
       }
@@ -45,8 +46,8 @@ export const ResponsiveDropdown: React.FC<DropdownProps> = ({ trigger, items, on
       {isOpen && (
         <div
           className={`fixed ${
-            dropdownPosition === "bottom" ? "top-full" : "bottom-full"
-          } right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50`}
+            dropdownPosition === "bottom" ? "top-12" : "bottom-12"
+          } right-4 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-100`}
         >
           <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
             {items.map((item, index) => (
@@ -56,6 +57,7 @@ export const ResponsiveDropdown: React.FC<DropdownProps> = ({ trigger, items, on
                 className={`flex flex-row px-4 py-2 text-sm text-gray-700 ${index === items.length ? "hover:bg-red-500 hover:rounded hover:text-white": 'hover:bg-gray-100 hover:text-gray-900 '}`}
                 role="menuitem"
                 onClick={(e) => {
+                  console.log(e);
                   e.preventDefault()
                   onSelect(item.id)
                   setIsOpen(false)

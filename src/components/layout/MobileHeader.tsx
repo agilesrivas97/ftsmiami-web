@@ -44,9 +44,9 @@ export const MobileHeader: React.FC = () => {
             >
               <span className="sr-only">Open main menu</span>
               {isMenuOpen ? (
-                <X className="block h-6 w-6" aria-hidden="true" />
+                <X className="block h-6 w-6" />
               ) : (
-                <Menu className="block h-6 w-6 " aria-hidden="true" />
+                <Menu className="block h-6 w-6 "  />
               )}
             </button>
           </div>

@@ -49,7 +49,6 @@ const ModalReport: React.FC<ModalReportProps> = (props) => {
     <div
       id="crud-modal"
       tabIndex={-1}
-      aria-hidden="true"
       className={` ${props.open ? "flex" : "hidden"}
         overflow-y-auto overflow-x-hidden fixed  z-50 justify-center items-center w-full h-full inset-0`}>
     
@@ -70,7 +69,6 @@ const ModalReport: React.FC<ModalReportProps> = (props) => {
             >
               <svg
                 className="w-3 h-3"
-                aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 14 14"
