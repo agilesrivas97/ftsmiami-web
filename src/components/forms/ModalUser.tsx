@@ -72,7 +72,7 @@ const ModalUser: React.FC<ModalUserProps> = (props) => {
       tabIndex={-1}
       aria-hidden="true"
       className={` ${props.open ? "flex" : "hidden"}
-        overflow-y-auto overflow-x-hidden  z-50 justify-center items-center w-full h-full`}>
+        overflow-y-auto overflow-x-hidden fixed  z-50 justify-center items-center w-full h-full inset-0`}>
     
       <div className="relative p-4 w-full max-w-md max-h-full">
         <div className="relative bg-black rounded-2xl shadow-sm ">
