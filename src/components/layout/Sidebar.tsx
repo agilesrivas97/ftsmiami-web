@@ -19,7 +19,7 @@ const Sidebar: React.FC = () => {
                     priority
                     />
             </div>
-            <nav className="flex min-w-[280px] flex-col gap-1 p-2 font-sans text-base font-normal ">
+            <nav className="flex flex-col gap-1 p-2 font-sans text-base font-normal ">
                 <Link href="/dashboard"
                     className="flex items-center w-full p-3 leading-tight transition-all rounded-sm-lg outline-hidden text-start hover:bg-blue-gray-50 hover:bg-white/40 hover:rounded hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-white/40 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-white/80  active:text-blue-gray-900">
                     <div className="grid mr-4 place-items-center">
