@@ -197,7 +197,6 @@ const ReportsPage: React.FC = () => {
     try {
       // Assuming sendEmail is a function from your service to send an email
       await sendEmailReport(id, email);
-      alert("Email sent successfully");
     } catch (error) {
       console.error("An unknown error occurred");
       console.log(error);
