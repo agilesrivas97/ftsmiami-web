@@ -7,7 +7,7 @@ import { createPortal } from "react-dom";
 interface DropdownProps {
   trigger: React.ReactNode;
   items: any[];
-  onSelect: (item: string) => void;
+  onSelect: (action:number) => void;
 }
 
 export const ResponsiveDropdown: React.FC<DropdownProps> = ({
@@ -31,9 +31,22 @@ export const ResponsiveDropdown: React.FC<DropdownProps> = ({
       }
     };
 
+    const handleMouseOut = (event: MouseEvent) => {
+      if (!dropdownRef.current?.contains(event.relatedTarget as Node)) {
+        setIsOpen(false);
+      }
+    };
+
+    const handleScroll = () => {
+      setIsOpen(false);
+    };
+
     document.addEventListener("mousedown", handleClickOutside);
+    window.addEventListener("scroll", handleScroll);
+
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
@@ -52,17 +65,16 @@ export const ResponsiveDropdown: React.FC<DropdownProps> = ({
   const clamp = (value: number, min: number, max: number) => Math.max(min, Math.min(value, max));
 
   return (
-    <div className="relative inline-block text-left " ref={dropdownRef}>
+    <div className="relative inline-block text-left " ref={dropdownRef}  >
       <div onClick={handleToggle}>{trigger}</div>
 
       {isOpen &&
-        createPortal(
           <div
-            className={`absolute ${
+            className={`fixed ${
               dropdownPosition === "bottom" ? "top-full" : "bottom-full"
             } left-0 mt-2 w-56 rounded-md shadow-lg bg-white z-50`}
             style={{
-              position: "absolute",
+              position: "fixed",
               backgroundColor: "white",
               top: dropdownRef.current ? dropdownRef.current.getBoundingClientRect().bottom + window.scrollY : 0,
               left: clamp(
@@ -81,7 +93,6 @@ export const ResponsiveDropdown: React.FC<DropdownProps> = ({
               {items.map((item, index) => (
                 <a
                   key={index}
-                  href="#"
                   className={`flex flex-row px-4 py-2 text-sm text-gray-700 ${
                     index === items.length
                       ? "hover:bg-red-500 hover:rounded hover:text-white"
@@ -89,7 +100,8 @@ export const ResponsiveDropdown: React.FC<DropdownProps> = ({
                   }`}
                   role="menuitem"
                   onClick={(e) => {
-                    e.preventDefault();
+                    e.stopPropagation();  // Detiene la propagación del click
+                    console.log(item.id)
                     onSelect(item.id);
                     setIsOpen(false);
                   }}
@@ -100,9 +112,8 @@ export const ResponsiveDropdown: React.FC<DropdownProps> = ({
                 </a>
               ))}
             </div>
-          </div>,
-          document.body
-        )}
+          </div>
+}
     </div>
   );
 };

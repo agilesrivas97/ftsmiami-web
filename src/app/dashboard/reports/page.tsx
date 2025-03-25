@@ -203,8 +203,8 @@ const ReportsPage: React.FC = () => {
     }
   };
 
-  const onSelect = async (action: any, id: any) => {
-    switch (id) {
+  const onSelectClick = async (action:number, id: any) => {
+    switch (action) {
       case 1:
         await onShowReport(id);
         break;
@@ -362,7 +362,7 @@ const ReportsPage: React.FC = () => {
                           xmlns="http://www.w3.org/2000/svg"
                           fill="none"
                           viewBox="0 0 24 24"
-                          stroke-width="1.5"
+                          strokeWidth="1.5"
                           stroke="currentColor"
                           className="size-6 mr-2"
                         >
@@ -395,7 +395,7 @@ const ReportsPage: React.FC = () => {
                       ),
                     },
                   ]}
-                  onSelect={(action) => { onSelect(action,report.id )}}
+                  onSelect={(action:number) => { onSelectClick(action, report.id)}}
                 />
               </td>
             </tr>
