@@ -204,7 +204,7 @@ const ReportsPage: React.FC = () => {
   };
 
   const onSelect = async (action: any, id: any) => {
-    switch (action) {
+    switch (id) {
       case 1:
         await onShowReport(id);
         break;

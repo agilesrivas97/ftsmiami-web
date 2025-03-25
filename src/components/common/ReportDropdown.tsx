@@ -89,7 +89,6 @@ export const ResponsiveDropdown: React.FC<DropdownProps> = ({
                   }`}
                   role="menuitem"
                   onClick={(e) => {
-                    console.log(e);
                     e.preventDefault();
                     onSelect(item.id);
                     setIsOpen(false);
