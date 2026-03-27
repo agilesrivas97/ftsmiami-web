@@ -146,15 +146,19 @@ export async function POST(req: NextRequest) {
     const date = new Date().toLocaleDateString('en-US');
     const pdfBytes = await generateFilledPdf(formData, signatureDataUrl, date);
 
-    const transporter = nodemailer.createTransport({
+    const smtpConfig = {
       host: process.env.SMTP_HOST,
-      port: Number(process.env.SMTP_PORT) || 587,
+      port: Number(process.env.SMTP_PORT) || 465,
       secure: Number(process.env.SMTP_PORT) === 465,
       auth: {
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASS,
       },
-    });
+    };
+
+    console.log('[W9 smtp] config:', { host: smtpConfig.host, port: smtpConfig.port, secure: smtpConfig.secure, user: smtpConfig.auth.user });
+
+    const transporter = nodemailer.createTransport(smtpConfig);
 
     const attachment = {
       filename: `W9_${formData.name.replace(/\s+/g, '_')}_${date.replace(/\//g, '-')}.pdf`,
@@ -163,7 +167,7 @@ export async function POST(req: NextRequest) {
     };
 
     // Main email to destination
-    await transporter.sendMail({
+    const mainInfo = await transporter.sendMail({
       from: process.env.SMTP_FROM,
       to: process.env.W9_DESTINATION_EMAIL!,
       subject: `W-9 Form – ${formData.name}`,
@@ -180,11 +184,13 @@ export async function POST(req: NextRequest) {
       `,
       attachments: [attachment],
     });
+    console.log('[W9 main] messageId:', mainInfo.messageId, '| response:', mainInfo.response, '| accepted:', mainInfo.accepted, '| rejected:', mainInfo.rejected);
 
     // Separate copy to the signer — isolated so it never fails the main request
     let copyError: string | null = null;
     if (recipientEmail) {
       try {
+        console.log('[W9 copy] attempting to send to:', recipientEmail);
         const copyInfo = await transporter.sendMail({
           from: process.env.SMTP_FROM,
           to: recipientEmail,
@@ -196,10 +202,10 @@ export async function POST(req: NextRequest) {
           `,
           attachments: [attachment],
         });
-        console.log('[W9 copy] sent to:', recipientEmail, '| messageId:', copyInfo.messageId, '| response:', copyInfo.response);
+        console.log('[W9 copy] messageId:', copyInfo.messageId, '| response:', copyInfo.response, '| accepted:', copyInfo.accepted, '| rejected:', copyInfo.rejected, '| pending:', copyInfo.pending);
       } catch (copyErr) {
         copyError = (copyErr as Error).message;
-        console.error('[W9 copy] FAILED to send to:', recipientEmail, '| error:', copyError);
+        console.error('[W9 copy] FAILED | error:', copyError);
       }
     }
 
