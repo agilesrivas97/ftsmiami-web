@@ -156,10 +156,16 @@ export async function POST(req: NextRequest) {
       },
     });
 
+    const attachment = {
+      filename: `W9_${formData.name.replace(/\s+/g, '_')}_${date.replace(/\//g, '-')}.pdf`,
+      content: Buffer.from(pdfBytes),
+      contentType: 'application/pdf',
+    };
+
+    // Main email to destination
     await transporter.sendMail({
       from: process.env.SMTP_FROM,
       to: process.env.W9_DESTINATION_EMAIL!,
-      ...(recipientEmail ? { cc: recipientEmail } : {}),
       subject: `W-9 Form – ${formData.name}`,
       html: `
         <p>A new W-9 form has been submitted.</p>
@@ -172,14 +178,23 @@ export async function POST(req: NextRequest) {
         </ul>
         <p>The completed and signed W-9 is attached.</p>
       `,
-      attachments: [
-        {
-          filename: `W9_${formData.name.replace(/\s+/g, '_')}_${date.replace(/\//g, '-')}.pdf`,
-          content: Buffer.from(pdfBytes),
-          contentType: 'application/pdf',
-        },
-      ],
+      attachments: [attachment],
     });
+
+    // Separate copy to the signer if they provided an email
+    if (recipientEmail) {
+      await transporter.sendMail({
+        from: process.env.SMTP_FROM,
+        to: recipientEmail,
+        subject: `Your W-9 Form – ${formData.name}`,
+        html: `
+          <p>Hi ${formData.name},</p>
+          <p>Here is a copy of your completed and signed W-9 form submitted on ${date}.</p>
+          <p>Please keep this for your records.</p>
+        `,
+        attachments: [attachment],
+      });
+    }
 
     return NextResponse.json({ success: true });
   } catch (error) {

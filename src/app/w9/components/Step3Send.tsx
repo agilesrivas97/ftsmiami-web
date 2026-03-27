@@ -79,10 +79,17 @@ export default function Step3Send({ formData, signatureDataUrl, onBack }: Props)
           ✓
         </div>
         <h2 className="text-xl font-bold text-gray-900 mb-2">W-9 Submitted Successfully</h2>
-        <p className="text-sm text-gray-500">
-          Your signed W-9 has been sent. A copy was also sent to{' '}
-          {recipientEmail || 'the designated recipient'}.
+        <p className="text-sm text-gray-500 mb-6">
+          Your signed W-9 has been sent successfully.
         </p>
+        <button
+          onClick={handleDownload}
+          disabled={downloading}
+          className="w-full py-3 rounded-lg border-2 text-sm font-semibold transition-colors disabled:opacity-40"
+          style={{ borderColor: '#842c30', color: '#842c30' }}
+        >
+          {downloading ? 'Generating PDF…' : '⬇ Download a copy of your W-9'}
+        </button>
       </div>
     );
   }
