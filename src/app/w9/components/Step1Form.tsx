@@ -20,7 +20,7 @@ const TAX_CLASSIFICATIONS = [
 ];
 
 const inputClass =
-  'w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:border-transparent';
+  'w-full border border-gray-300 rounded-lg px-3 py-2 text-base focus:outline-none focus:ring-2 focus:border-transparent';
 const focusStyle = { '--tw-ring-color': '#842c30' } as React.CSSProperties;
 const labelClass = 'block text-sm font-medium text-gray-700 mb-1';
 
@@ -237,7 +237,7 @@ export default function Step1Form({ formData, onChange, onNext }: Props) {
             <div className="flex items-center gap-2">
               <input
                 ref={ssn1Ref}
-                className="border border-gray-300 rounded-lg px-3 py-2 text-sm w-20 text-center focus:outline-none focus:ring-2"
+                className="border border-gray-300 rounded-lg px-3 py-2 text-base w-20 text-center focus:outline-none focus:ring-2"
                 style={focusStyle}
                 inputMode="numeric"
                 pattern="\d*"
@@ -254,7 +254,7 @@ export default function Step1Form({ formData, onChange, onNext }: Props) {
               <span className="text-gray-400">–</span>
               <input
                 ref={ssn2Ref}
-                className="border border-gray-300 rounded-lg px-3 py-2 text-sm w-16 text-center focus:outline-none focus:ring-2"
+                className="border border-gray-300 rounded-lg px-3 py-2 text-base w-16 text-center focus:outline-none focus:ring-2"
                 style={focusStyle}
                 inputMode="numeric"
                 pattern="\d*"
@@ -271,7 +271,7 @@ export default function Step1Form({ formData, onChange, onNext }: Props) {
               <span className="text-gray-400">–</span>
               <input
                 ref={ssn3Ref}
-                className="border border-gray-300 rounded-lg px-3 py-2 text-sm w-24 text-center focus:outline-none focus:ring-2"
+                className="border border-gray-300 rounded-lg px-3 py-2 text-base w-24 text-center focus:outline-none focus:ring-2"
                 style={focusStyle}
                 inputMode="numeric"
                 pattern="\d*"
@@ -294,7 +294,7 @@ export default function Step1Form({ formData, onChange, onNext }: Props) {
             <div className="flex items-center gap-2">
               <input
                 ref={ein1Ref}
-                className="border border-gray-300 rounded-lg px-3 py-2 text-sm w-20 text-center focus:outline-none focus:ring-2"
+                className="border border-gray-300 rounded-lg px-3 py-2 text-base w-20 text-center focus:outline-none focus:ring-2"
                 style={focusStyle}
                 inputMode="numeric"
                 pattern="\d*"
@@ -312,7 +312,7 @@ export default function Step1Form({ formData, onChange, onNext }: Props) {
               <span className="text-gray-400">–</span>
               <input
                 ref={ein2Ref}
-                className="border border-gray-300 rounded-lg px-3 py-2 text-sm w-32 text-center focus:outline-none focus:ring-2"
+                className="border border-gray-300 rounded-lg px-3 py-2 text-base w-32 text-center focus:outline-none focus:ring-2"
                 style={focusStyle}
                 inputMode="numeric"
                 pattern="\d*"

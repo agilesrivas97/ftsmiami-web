@@ -98,18 +98,20 @@ async function generateFilledPdf(
   setText(F.dateDay, dd);
   setText(F.dateYear, yyyy);
 
-  // Signature image — drawn at the bottom of every page
+  // Signature image — only on first and last page
   if (signatureDataUrl?.startsWith('data:image/png;base64,')) {
     const signatureBytes = Buffer.from(
       signatureDataUrl.replace('data:image/png;base64,', ''),
       'base64'
     );
     const signatureImage = await pdfDoc.embedPng(signatureBytes);
-    for (const page of pdfDoc.getPages()) {
+    const pages = pdfDoc.getPages();
+    const targets = [pages[0], pages[pages.length - 1]].filter(Boolean);
+    for (const page of targets) {
       const { height: ph } = page.getSize();
       page.drawImage(signatureImage, {
         x: 47,
-        y: ph === 792 ? 90 : 28,  // page 1 has sign-here line at y=84; others get bottom margin
+        y: ph >= 791 && ph <= 793 ? 90 : 28,
         width: 200,
         height: 28,
         opacity: 0.85,
@@ -123,14 +125,23 @@ async function generateFilledPdf(
   return pdfDoc.save();
 }
 
+export const maxDuration = 30;
+
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json();
+    const raw = await req.text();
+    let body: Record<string, unknown>;
+    try {
+      body = JSON.parse(raw);
+    } catch {
+      return NextResponse.json({ success: false, error: 'Invalid request body' }, { status: 400 });
+    }
     const { formData, signatureDataUrl, recipientEmail } = body as {
       formData: W9FormData;
       signatureDataUrl: string;
       recipientEmail?: string;
     };
+
 
     const date = new Date().toLocaleDateString('en-US');
     const pdfBytes = await generateFilledPdf(formData, signatureDataUrl, date);
@@ -145,12 +156,10 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    const toAddresses = [process.env.W9_DESTINATION_EMAIL!];
-    if (recipientEmail) toAddresses.push(recipientEmail);
-
     await transporter.sendMail({
       from: process.env.SMTP_FROM,
-      to: toAddresses.join(', '),
+      to: process.env.W9_DESTINATION_EMAIL!,
+      ...(recipientEmail ? { cc: recipientEmail } : {}),
       subject: `W-9 Form – ${formData.name}`,
       html: `
         <p>A new W-9 form has been submitted.</p>
@@ -185,7 +194,8 @@ export async function POST(req: NextRequest) {
 // Separate endpoint to just generate the PDF (for download fallback)
 export async function PUT(req: NextRequest) {
   try {
-    const body = await req.json();
+    const raw = await req.text();
+    const body = JSON.parse(raw);
     const { formData, signatureDataUrl } = body as {
       formData: W9FormData;
       signatureDataUrl: string;

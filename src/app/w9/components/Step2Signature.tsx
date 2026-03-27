@@ -33,18 +33,26 @@ export default function Step2Signature({
     setIsEmpty(true);
   };
 
+  // Compress signature to a small PNG (max 400x120) to keep request size small
+  const compressSignature = (): string => {
+    const raw = sigRef.current!.getCanvas();
+    const out = document.createElement('canvas');
+    out.width = 400;
+    out.height = 120;
+    out.getContext('2d')!.drawImage(raw, 0, 0, 400, 120);
+    return out.toDataURL('image/png');
+  };
+
   const handleEnd = () => {
     if (!sigRef.current?.isEmpty()) {
-      const dataUrl = sigRef.current!.toDataURL('image/png');
-      onSignatureChange(dataUrl);
+      onSignatureChange(compressSignature());
       setIsEmpty(false);
     }
   };
 
   const handleNext = () => {
     if (sigRef.current && !sigRef.current.isEmpty()) {
-      const dataUrl = sigRef.current.toDataURL('image/png');
-      onSignatureChange(dataUrl);
+      onSignatureChange(compressSignature());
       onNext();
     }
   };
