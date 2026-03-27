@@ -11,10 +11,12 @@ interface Props {
 
 type Status = 'idle' | 'loading' | 'success' | 'error';
 
+
 export default function Step3Send({ formData, signatureDataUrl, onBack }: Props) {
   const [recipientEmail, setRecipientEmail] = useState('');
   const [status, setStatus] = useState<Status>('idle');
   const [errorMsg, setErrorMsg] = useState('');
+  const [copyError, setCopyError] = useState<string | null>(null);
   const [downloading, setDownloading] = useState(false);
 
   const handleSend = async () => {
@@ -29,6 +31,7 @@ export default function Step3Send({ formData, signatureDataUrl, onBack }: Props)
       const json = await res.json();
       if (json.success) {
         setStatus('success');
+        setCopyError(json.copyError || null);
       } else {
         setStatus('error');
         setErrorMsg(json.error || 'Unknown error occurred.');
@@ -79,9 +82,15 @@ export default function Step3Send({ formData, signatureDataUrl, onBack }: Props)
           ✓
         </div>
         <h2 className="text-xl font-bold text-gray-900 mb-2">W-9 Submitted Successfully</h2>
-        <p className="text-sm text-gray-500 mb-6">
+        <p className="text-sm text-gray-500 mb-4">
           Your signed W-9 has been sent successfully.
         </p>
+        {copyError && (
+          <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 mb-4 text-left">
+            <p className="text-xs font-semibold text-amber-700 mb-1">Copy not delivered to {recipientEmail}</p>
+            <p className="text-xs text-amber-600 font-mono break-all">{copyError}</p>
+          </div>
+        )}
         <button
           onClick={handleDownload}
           disabled={downloading}

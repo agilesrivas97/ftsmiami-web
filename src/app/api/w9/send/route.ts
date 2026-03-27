@@ -181,22 +181,29 @@ export async function POST(req: NextRequest) {
       attachments: [attachment],
     });
 
-    // Separate copy to the signer if they provided an email
+    // Separate copy to the signer — isolated so it never fails the main request
+    let copyError: string | null = null;
     if (recipientEmail) {
-      await transporter.sendMail({
-        from: process.env.SMTP_FROM,
-        to: recipientEmail,
-        subject: `Your W-9 Form – ${formData.name}`,
-        html: `
-          <p>Hi ${formData.name},</p>
-          <p>Here is a copy of your completed and signed W-9 form submitted on ${date}.</p>
-          <p>Please keep this for your records.</p>
-        `,
-        attachments: [attachment],
-      });
+      try {
+        const copyInfo = await transporter.sendMail({
+          from: process.env.SMTP_FROM,
+          to: recipientEmail,
+          subject: `Your W-9 Form – ${formData.name}`,
+          html: `
+            <p>Hi ${formData.name},</p>
+            <p>Here is a copy of your completed and signed W-9 form submitted on ${date}.</p>
+            <p>Please keep this for your records.</p>
+          `,
+          attachments: [attachment],
+        });
+        console.log('[W9 copy] sent to:', recipientEmail, '| messageId:', copyInfo.messageId, '| response:', copyInfo.response);
+      } catch (copyErr) {
+        copyError = (copyErr as Error).message;
+        console.error('[W9 copy] FAILED to send to:', recipientEmail, '| error:', copyError);
+      }
     }
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true, copyError });
   } catch (error) {
     console.error('W-9 send error:', error);
     return NextResponse.json(
