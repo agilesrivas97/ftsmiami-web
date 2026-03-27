@@ -1,5 +1,6 @@
 'use client';
 
+import { useRef } from 'react';
 import { W9FormData } from '../types';
 
 interface Props {
@@ -24,6 +25,12 @@ const focusStyle = { '--tw-ring-color': '#842c30' } as React.CSSProperties;
 const labelClass = 'block text-sm font-medium text-gray-700 mb-1';
 
 export default function Step1Form({ formData, onChange, onNext }: Props) {
+  const ssn1Ref = useRef<HTMLInputElement>(null);
+  const ssn2Ref = useRef<HTMLInputElement>(null);
+  const ssn3Ref = useRef<HTMLInputElement>(null);
+  const ein1Ref = useRef<HTMLInputElement>(null);
+  const ein2Ref = useRef<HTMLInputElement>(null);
+
   const set = (field: keyof W9FormData, value: string) =>
     onChange({ ...formData, [field]: value });
 
@@ -229,30 +236,50 @@ export default function Step1Form({ formData, onChange, onNext }: Props) {
             </label>
             <div className="flex items-center gap-2">
               <input
+                ref={ssn1Ref}
                 className="border border-gray-300 rounded-lg px-3 py-2 text-sm w-20 text-center focus:outline-none focus:ring-2"
                 style={focusStyle}
+                inputMode="numeric"
+                pattern="\d*"
                 value={formData.ssn1}
-                onChange={(e) => set('ssn1', e.target.value.replace(/\D/g, '').slice(0, 3))}
+                onChange={(e) => {
+                  const val = e.target.value.replace(/\D/g, '').slice(0, 3);
+                  set('ssn1', val);
+                  if (val.length === 3) ssn2Ref.current?.focus();
+                }}
                 placeholder="XXX"
                 maxLength={3}
                 required
               />
               <span className="text-gray-400">–</span>
               <input
+                ref={ssn2Ref}
                 className="border border-gray-300 rounded-lg px-3 py-2 text-sm w-16 text-center focus:outline-none focus:ring-2"
                 style={focusStyle}
+                inputMode="numeric"
+                pattern="\d*"
                 value={formData.ssn2}
-                onChange={(e) => set('ssn2', e.target.value.replace(/\D/g, '').slice(0, 2))}
+                onChange={(e) => {
+                  const val = e.target.value.replace(/\D/g, '').slice(0, 2);
+                  set('ssn2', val);
+                  if (val.length === 2) ssn3Ref.current?.focus();
+                }}
                 placeholder="XX"
                 maxLength={2}
                 required
               />
               <span className="text-gray-400">–</span>
               <input
+                ref={ssn3Ref}
                 className="border border-gray-300 rounded-lg px-3 py-2 text-sm w-24 text-center focus:outline-none focus:ring-2"
                 style={focusStyle}
+                inputMode="numeric"
+                pattern="\d*"
                 value={formData.ssn3}
-                onChange={(e) => set('ssn3', e.target.value.replace(/\D/g, '').slice(0, 4))}
+                onChange={(e) => {
+                  const val = e.target.value.replace(/\D/g, '').slice(0, 4);
+                  set('ssn3', val);
+                }}
                 placeholder="XXXX"
                 maxLength={4}
                 required
@@ -266,13 +293,17 @@ export default function Step1Form({ formData, onChange, onNext }: Props) {
             </label>
             <div className="flex items-center gap-2">
               <input
+                ref={ein1Ref}
                 className="border border-gray-300 rounded-lg px-3 py-2 text-sm w-20 text-center focus:outline-none focus:ring-2"
                 style={focusStyle}
+                inputMode="numeric"
+                pattern="\d*"
                 value={formData.ein.split('-')[0] || ''}
                 onChange={(e) => {
                   const part1 = e.target.value.replace(/\D/g, '').slice(0, 2);
                   const part2 = formData.ein.split('-')[1] || '';
                   set('ein', part2 ? `${part1}-${part2}` : part1);
+                  if (part1.length === 2) ein2Ref.current?.focus();
                 }}
                 placeholder="XX"
                 maxLength={2}
@@ -280,8 +311,11 @@ export default function Step1Form({ formData, onChange, onNext }: Props) {
               />
               <span className="text-gray-400">–</span>
               <input
+                ref={ein2Ref}
                 className="border border-gray-300 rounded-lg px-3 py-2 text-sm w-32 text-center focus:outline-none focus:ring-2"
                 style={focusStyle}
+                inputMode="numeric"
+                pattern="\d*"
                 value={formData.ein.split('-')[1] || ''}
                 onChange={(e) => {
                   const part1 = formData.ein.split('-')[0] || '';
