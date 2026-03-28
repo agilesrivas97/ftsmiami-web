@@ -98,22 +98,20 @@ async function generateFilledPdf(
   setText(F.dateDay, dd);
   setText(F.dateYear, yyyy);
 
-  // Signature image — only on first and last page
+  // Signature image on page index 1 (the form page), before flatten
   if (signatureDataUrl?.startsWith('data:image/png;base64,')) {
     const signatureBytes = Buffer.from(
       signatureDataUrl.replace('data:image/png;base64,', ''),
       'base64'
     );
     const signatureImage = await pdfDoc.embedPng(signatureBytes);
-    const pages = pdfDoc.getPages();
-    const targets = [pages[0], pages[pages.length - 1]].filter(Boolean);
-    for (const page of targets) {
-      const { height: ph } = page.getSize();
-      page.drawImage(signatureImage, {
-        x: 47,
-        y: ph >= 791 && ph <= 793 ? 90 : 28,
-        width: 200,
-        height: 28,
+    const formPage = pdfDoc.getPages()[1];
+    if (formPage) {
+      formPage.drawImage(signatureImage, {
+        x: 130,
+        y: 85,
+        width: 280,
+        height: 22,
         opacity: 0.85,
       });
     }
@@ -121,6 +119,9 @@ async function generateFilledPdf(
 
   // Flatten so fields are baked into the PDF
   form.flatten();
+
+  // Remove cover page last, after all operations
+  pdfDoc.removePage(0);
 
   return pdfDoc.save();
 }
@@ -219,7 +220,7 @@ export async function POST(req: NextRequest) {
   }
 }
 
-// Separate endpoint to just generate the PDF (for download fallback)
+// Separate endpoint to just generate the PDF (for download)
 export async function PUT(req: NextRequest) {
   try {
     const raw = await req.text();
@@ -247,3 +248,4 @@ export async function PUT(req: NextRequest) {
     );
   }
 }
+
