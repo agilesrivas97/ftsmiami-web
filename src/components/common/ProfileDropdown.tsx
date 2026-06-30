@@ -30,7 +30,7 @@ const ProfileDropdown: React.FC = () => {
     <div className="">
       <img
         alt="Fts Miami"
-        src="https://ftsmiami.com/images/logos/logotipo.webp"
+        src="https://federaltacticsus.com/images/logos/logotipo.webp"
         className="relative inline-block h-10 w-10 cursor-pointer  rounded-4xl object-cover object-center"
         data-popover-target="profile-menu"
         onClick={toggleDropdown}

@@ -169,7 +169,7 @@ export default function Step3Send({ formData, signatureDataUrl, onBack }: Props)
             className="text-sm font-bold mb-3"
             style={{ color: '#842c30' }}
           >
-            {process.env.NEXT_PUBLIC_W9_DESTINATION_EMAIL || 'admin@ftsmiami.com'}
+            {process.env.NEXT_PUBLIC_W9_DESTINATION_EMAIL || 'admin@federaltacticsus.com'}
           </p>
           <button
             onClick={handleDownload}

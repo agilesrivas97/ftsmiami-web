@@ -52,7 +52,7 @@ export default function Home() {
         <div className="flex gap-4 items-center flex-col sm:flex-row text-white">
           <a
             className="rounded-sm border border-solid border-transparent transition-colors flex items-center justify-center bg-primary text-white gap-2 hover:bg-secondary hover:text-white text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://ftsmiami.com"
+            href="https://federaltacticsus.com"
             rel="noopener noreferrer"
           >
             FTS Page

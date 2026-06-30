@@ -1,6 +1,6 @@
 import { Company } from "@/types/company";
 
-const API_URL = 'https://api-report.ftsmiami.com/api';
+const API_URL = 'https://api-report.federaltacticsus.com/api';
 
 
 async function fetchWithToken(url: string, options: RequestInit, token: string) {
