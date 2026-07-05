@@ -48,7 +48,7 @@ export async function createCompany(company: Company, token: string): Promise<Co
 
 export async function updateCompany(id: number, company: Partial<Company>, token: string): Promise<Company> {
     const response = await fetchWithToken(`${API_URL}/companies/${id}`, {
-        method: 'PATCH',
+        method: 'PUT',
         body: JSON.stringify(company),
     }, token);
     if (!response.ok) {
