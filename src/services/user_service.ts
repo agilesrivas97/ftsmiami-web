@@ -48,7 +48,7 @@ export async function createUser(user: User, token: string): Promise<User> {
 
 export async function updateUser(id: number, user: Partial<User>, token: string): Promise<User> {
     const response = await fetchWithToken(`${API_URL}/users/${id}`, {
-        method: 'PATCH',
+        method: 'PUT',
         body: JSON.stringify(user),
     }, token);
     if (!response.ok) {
